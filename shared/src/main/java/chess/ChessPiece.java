@@ -8,11 +8,7 @@ import java.util.Collection;
  * Note: You can add to this class, but you may not alter
  * signature of the existing methods.
  */
-public class ChessPiece {
-
-    public ChessPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type) {
-    }
-
+public record ChessPiece (ChessGame.TeamColor pieceColor, ChessPiece.PieceType type){
     /**
      * The various different chess piece options
      */
@@ -29,14 +25,14 @@ public class ChessPiece {
      * @return Which team this chess piece belongs to
      */
     public ChessGame.TeamColor getTeamColor() {
-        throw new RuntimeException("Not implemented");
+       return pieceColor;
     }
 
     /**
      * @return which type of chess piece this piece is
      */
     public PieceType getPieceType() {
-        throw new RuntimeException("Not implemented");
+        return type;
     }
 
     /**
@@ -47,6 +43,15 @@ public class ChessPiece {
      * @return Collection of valid moves
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        throw new RuntimeException("Not implemented");
+        ChessPiece piece = board.getPiece(myPosition);
+        PieceMovesCalculator movesCalculator = switch (piece.getPieceType()){
+            case ROOK -> new KingMovesCalculator();
+            case KNIGHT -> new KingMovesCalculator();
+            case BISHOP -> new KingMovesCalculator();
+            case KING -> new KingMovesCalculator();
+            case QUEEN -> new KingMovesCalculator();
+            case PAWN -> new KingMovesCalculator();
+        };
+        return movesCalculator.pieceMoves(board, myPosition, piece);
     }
 }

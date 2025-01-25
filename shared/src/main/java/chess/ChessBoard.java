@@ -7,37 +7,34 @@ package chess;
  * signature of the existing methods.
  */
 public class ChessBoard {
-
+    ChessPiece[][] board;
     public ChessBoard() {
-        
+        this.board = new ChessPiece[9][9];
     }
-
-    /**
-     * Adds a chess piece to the chessboard
-     *
-     * @param position where to add the piece to
-     * @param piece    the piece to add
-     */
     public void addPiece(ChessPosition position, ChessPiece piece) {
-        throw new RuntimeException("Not implemented");
+        this.board[position.getRow()][position.getColumn()] = piece;
     }
-
-    /**
-     * Gets a chess piece on the chessboard
-     *
-     * @param position The position to get the piece from
-     * @return Either the piece at the position, or null if no piece is at that
-     * position
-     */
     public ChessPiece getPiece(ChessPosition position) {
-        throw new RuntimeException("Not implemented");
+        return this.board[position.getRow()][position.getColumn()];
     }
 
     /**
      * Sets the board to the default starting board
      * (How the game of chess normally starts)
      */
+    void addRooks(){
+        //white Rooks:
+    }
+    //works
+    void addPawns(){
+        for(int col = 1; col < 9; col++){
+            addPiece(new ChessPosition(1,col), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN));
+            addPiece(new ChessPosition(7,col), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.PAWN));
+        }
+
+    }
     public void resetBoard() {
-        throw new RuntimeException("Not implemented");
+        addPawns();
+
     }
 }
